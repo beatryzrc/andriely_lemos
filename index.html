@@ -1,1086 +1,244 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Andriely Lemos — Assessoria Jurídica especializada em Registro de Marcas no INPI.">
-<title>Andriely Lemos | Assessoria Jurídica · Registro de Marcas</title>
+<meta name="description" content="Andriely Lemos — Assessoria Jurídica especializada em Registro de Marcas. Proteja sua marca com quem entende do assunto.">
+<title>Andriely Lemos | Registro de Marcas</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
 <style>
-/* ─────────────────────────────────────────
-   RESET & TOKENS
-───────────────────────────────────────── */
+/* ===== RESET ===== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* ===== VARIÁVEIS ===== */
 :root{
-  /* Neutrals — the dominant palette */
-  --ink:       #141414;
-  --ink-60:    rgba(20,20,20,.60);
-  --ink-30:    rgba(20,20,20,.30);
-  --ink-10:    rgba(20,20,20,.10);
-  --ink-06:    rgba(20,20,20,.06);
-  --parchment: #F2EDE6;
-  --off-white: #FAFAF8;
-  --white:     #FFFFFF;
-  --warm-mid:  #E8E3DC;
-
-/* Green — accent only */
-–sage:      #3A6B50;
-–sage-lt:   #4E8A68;
-–sage-pale: rgba(58,107,80,.08);
-–sage-line: rgba(58,107,80,.18);
-
-/* Type scale */
-–display: ‘Cormorant’, Georgia, serif;
-–body:    ‘Outfit’, system-ui, sans-serif;
-
-/* Spacing */
-–pad-x: clamp(1.5rem, 6vw, 6rem);
-–section-y: clamp(5rem, 9vw, 9rem);
-
-/* Motion */
-–ease: cubic-bezier(.22,1,.36,1);
-–fast: .25s;
-–mid:  .5s;
-–slow: .8s;
+  --v1:#0d2b1a;--v2:#1a4a2e;--v3:#2d7a50;
+  --d1:#b8902a;--d2:#d4a83c;
+  --c:#f5f0e8;--w:#fff;--t1:#1a1a1a;--t2:#555;
+  --r:0.6rem;
+  --transition:0.35s cubic-bezier(0.4,0,0.2,1);
 }
 
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:var(–body);background:var(–off-white);color:var(–ink);overflow-x:hidden;cursor:none}
+/* ===== BASE ===== */
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--c);
+  color:var(--t1);
+  overflow-x:hidden;
+}
 
-/* ─────────────────────────────────────────
-CUSTOM CURSOR
-───────────────────────────────────────── */
-.cur-dot{
-position:fixed;width:8px;height:8px;border-radius:50%;
-background:var(–sage);pointer-events:none;z-index:9999;
-transform:translate(-50%,-50%);transition:transform var(–fast),opacity var(–fast);
+/* ===== CURSOR (SÓ DESKTOP) ===== */
+@media(pointer:fine){
+  body{cursor:none}
+  .cursor,.cursor-ring{display:block}
 }
-.cur-ring{
-position:fixed;width:32px;height:32px;border-radius:50%;
-border:1px solid var(–sage);pointer-events:none;z-index:9998;
-transform:translate(-50%,-50%);opacity:.4;
-transition:width .3s var(–ease),height .3s var(–ease),opacity .3s;
+@media(pointer:coarse){
+  .cursor,.cursor-ring{display:none}
 }
-@media(hover:none){.cur-dot,.cur-ring{display:none}body{cursor:auto}}
 
-/* ─────────────────────────────────────────
-LOADER
-───────────────────────────────────────── */
-#loader{
-position:fixed;inset:0;z-index:10000;
-background:var(–ink);
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
-transition:opacity .7s var(–ease),visibility .7s;
+.cursor{
+  position:fixed;width:10px;height:10px;
+  background:var(--v3);border-radius:50%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;z-index:9999;
 }
-#loader.out{opacity:0;visibility:hidden;pointer-events:none}
-.ld-name{
-font-family:var(–display);font-size:2rem;font-weight:300;
-letter-spacing:.12em;color:var(–off-white);
-opacity:0;animation:li .8s .3s var(–ease) forwards;
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border:1.5px solid var(--v3);
+  border-radius:50%;opacity:.4;
+  transform:translate(-50%,-50%);
+  pointer-events:none;z-index:9998;
 }
-.ld-name b{font-weight:600;font-style:italic;color:var(–sage-lt)}
-.ld-bar{width:160px;height:1px;background:rgba(255,255,255,.12);overflow:hidden}
-.ld-bar i{display:block;height:100%;background:var(–sage-lt);transform:scaleX(0);transform-origin:left;animation:lb 1.4s .5s var(–ease) forwards}
-@keyframes li{to{opacity:1}}
-@keyframes lb{to{transform:scaleX(1)}}
 
-/* ─────────────────────────────────────────
-NAV
-───────────────────────────────────────── */
+/* ===== LOADER ===== */
+.loader{
+  position:fixed;inset:0;
+  background:var(--v1);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;z-index:9999;
+  transition:.6s;
+}
+.loader.hide{opacity:0;visibility:hidden}
+.loader-logo{
+  font-family:'Playfair Display',serif;
+  font-size:2.5rem;color:#fff;
+}
+.loader-bar{width:200px;height:2px;background:#ffffff33;margin-top:1rem}
+.loader-bar::after{
+  content:'';display:block;height:100%;background:var(--d2);
+  animation:bar 1.3s forwards;
+}
+@keyframes bar{from{width:0}to{width:100%}}
+
+/* ===== NAV ===== */
 nav{
-position:fixed;top:0;inset-inline:0;z-index:500;
-display:flex;align-items:center;justify-content:space-between;
-padding:.9rem var(–pad-x);
-transition:background var(–mid),box-shadow var(–mid),backdrop-filter var(–mid);
+  position:fixed;top:0;width:100%;
+  padding:1rem 5%;
+  display:flex;justify-content:space-between;align-items:center;
+  z-index:1000;
 }
-nav.solid{
-background:rgba(250,250,248,.94);
-backdrop-filter:blur(20px);
-box-shadow:0 1px 0 var(–ink-10);
+nav.scrolled{
+  background:rgba(245,240,232,.95);
+  backdrop-filter:blur(10px);
 }
 .nav-logo{
-font-family:var(–display);font-size:1.15rem;font-weight:600;
-letter-spacing:.06em;color:var(–ink);text-decoration:none;
-display:flex;align-items:baseline;gap:.35rem;
+  font-family:'Playfair Display',serif;
+  font-weight:700;text-decoration:none;
+  color:var(--v1);
 }
-.nav-logo em{font-style:italic;font-weight:300;color:var(–sage)}
-.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+.nav-logo span{color:var(--d1)}
+.nav-links{list-style:none;display:flex;gap:2rem}
 .nav-links a{
-font-size:.72rem;font-weight:400;letter-spacing:.14em;
-text-transform:uppercase;color:var(–ink-60);text-decoration:none;
-position:relative;transition:color var(–fast);
+  text-decoration:none;text-transform:uppercase;
+  font-size:.75rem;letter-spacing:.12em;
+  color:var(--v2);
 }
-.nav-links a::after{
-content:’’;position:absolute;left:0;bottom:-2px;
-width:0;height:1px;background:var(–sage);transition:width var(–mid) var(–ease);
+.nav-wa{
+  background:var(--v2);color:#fff;
+  padding:.6rem 1.4rem;border-radius:2rem;
+  text-decoration:none;font-size:.75rem;
 }
-.nav-links a:hover{color:var(–ink)}
-.nav-links a:hover::after{width:100%}
-.nav-cta{
-display:inline-flex;align-items:center;gap:.5rem;
-padding:.55rem 1.4rem;border:1px solid var(–ink);
-font-size:.72rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
-color:var(–ink);text-decoration:none;
-transition:background var(–fast),color var(–fast);
-}
-.nav-cta:hover{background:var(–ink);color:var(–white)}
-/* hamburger */
-.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.nav-ham span{display:block;width:22px;height:1px;background:var(–ink);transition:transform var(–mid) var(–ease),opacity var(–fast)}
-.nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.nav-ham.open span:nth-child(2){opacity:0}
-.nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-/* mobile overlay */
-.mob-nav{
-display:none;position:fixed;inset:0;z-index:499;
-background:var(–ink);flex-direction:column;align-items:center;justify-content:center;
-gap:3rem;opacity:0;transition:opacity var(–mid) var(–ease);
-}
-.mob-nav.open{opacity:1}
-.mob-nav a{
-font-family:var(–display);font-size:2.8rem;font-weight:300;
-color:var(–off-white);text-decoration:none;
-opacity:0;transform:translateY(16px);
-transition:opacity var(–mid) var(–ease),transform var(–mid) var(–ease),color var(–fast);
-}
-.mob-nav.open a{opacity:1;transform:none}
-.mob-nav.open a:nth-child(1){transition-delay:.06s}
-.mob-nav.open a:nth-child(2){transition-delay:.10s}
-.mob-nav.open a:nth-child(3){transition-delay:.14s}
-.mob-nav.open a:nth-child(4){transition-delay:.18s}
-.mob-nav.open a:nth-child(5){transition-delay:.22s}
-.mob-nav a:hover{color:var(–sage-lt)}
 
-/* ─────────────────────────────────────────
-SCROLL REVEAL
-───────────────────────────────────────── */
-.sr{opacity:0;transform:translateY(28px);transition:opacity var(–slow) var(–ease),transform var(–slow) var(–ease)}
-.sr.in{opacity:1;transform:none}
-.sr.d1{transition-delay:.08s}.sr.d2{transition-delay:.16s}.sr.d3{transition-delay:.24s}.sr.d4{transition-delay:.32s}
-
-/* ─────────────────────────────────────────
-SECTION HELPERS
-───────────────────────────────────────── */
-.kicker{
-display:inline-flex;align-items:center;gap:.7rem;
-font-size:.65rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
-color:var(–sage);margin-bottom:1.2rem;
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;background:var(--v1);
+  display:flex;align-items:center;
 }
-.kicker::before{content:’’;width:24px;height:1px;background:var(–sage)}
-.display{
-font-family:var(–display);font-weight:300;line-height:1.08;
-font-size:clamp(2.6rem,5.5vw,5rem);color:var(–ink);
+.hero-content{padding:8rem 5%;max-width:900px}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3rem,6vw,5rem);
+  color:#fff;line-height:1.1;
 }
-.display em{font-style:italic;font-weight:300}
-.body-lg{font-size:1rem;line-height:1.85;color:var(–ink-60);font-weight:300}
-.body-sm{font-size:.88rem;line-height:1.8;color:var(–ink-60);font-weight:300}
-
-/* ─────────────────────────────────────────
-HERO
-───────────────────────────────────────── */
-#hero{
-min-height:100svh;padding-top:5rem;
-display:grid;grid-template-columns:1fr 1fr;
-background:var(–off-white);position:relative;overflow:hidden;
-}
-.hero-left{
-padding:var(–section-y) var(–pad-x);
-display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;
-}
-.hero-eyebrow{
-display:inline-flex;align-items:center;gap:.6rem;
-font-size:.65rem;font-weight:400;letter-spacing:.22em;text-transform:uppercase;
-color:var(–ink-60);margin-bottom:2.5rem;
-opacity:0;animation:fadeUp .7s 1.8s var(–ease) forwards;
-}
-.hero-eyebrow::before{content:’’;width:20px;height:1px;background:var(–sage)}
-.hero-eyebrow span{color:var(–sage)}
-.hero-h1{
-font-family:var(–display);font-size:clamp(3.2rem,6.5vw,6rem);
-font-weight:300;line-height:1.04;color:var(–ink);
-margin-bottom:2rem;
-opacity:0;animation:fadeUp .8s 2s var(–ease) forwards;
-}
-.hero-h1 em{font-style:italic;display:block}
+.hero-title em{color:var(--d2)}
 .hero-sub{
-max-width:400px;margin-bottom:3rem;
-opacity:0;animation:fadeUp .8s 2.15s var(–ease) forwards;
+  margin:1.5rem 0 2.5rem;
+  color:rgba(255,255,255,.6);
 }
-.hero-actions{
-display:flex;flex-wrap:wrap;gap:.75rem;
-opacity:0;animation:fadeUp .8s 2.3s var(–ease) forwards;
-}
-.btn-dark{
-display:inline-flex;align-items:center;gap:.6rem;
-padding:.8rem 1.8rem;background:var(–ink);color:var(–white);
-font-size:.75rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
-text-decoration:none;border:1px solid var(–ink);
-transition:background var(–fast),color var(–fast),transform var(–fast);
-}
-.btn-dark:hover{background:var(–sage);border-color:var(–sage);transform:translateY(-1px)}
-.btn-ghost{
-display:inline-flex;align-items:center;gap:.6rem;
-padding:.8rem 1.8rem;background:transparent;color:var(–ink);
-font-size:.75rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
-text-decoration:none;border:1px solid var(–ink-30);
-transition:border-color var(–fast),transform var(–fast);
-}
-.btn-ghost:hover{border-color:var(–ink);transform:translateY(-1px)}
-.hero-scroll-hint{
-margin-top:auto;padding-top:3rem;
-display:flex;align-items:center;gap:.8rem;
-opacity:0;animation:fadeUp .7s 2.5s var(–ease) forwards;
-}
-.hero-scroll-hint span{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(–ink-30)}
-.scroll-track{width:40px;height:1px;background:var(–ink-10);overflow:hidden;position:relative}
-.scroll-track::after{
-content:’’;position:absolute;inset:0;background:var(–sage);
-transform:scaleX(0);transform-origin:left;
-animation:scrollPulse 2.4s 3s infinite;
-}
-@keyframes scrollPulse{0%{transform:scaleX(0);transform-origin:left}50%{transform:scaleX(1);transform-origin:left}50.01%{transform-origin:right}100%{transform:scaleX(0);transform-origin:right}}
 
-/* hero right panel */
-.hero-right{
-background:var(–ink);position:relative;overflow:hidden;
-display:flex;flex-direction:column;justify-content:flex-end;
-opacity:0;animation:fadeIn .9s 1.6s var(–ease) forwards;
+/* ===== BOTÕES ===== */
+.btn-gold{
+  background:var(--d2);color:var(--v1);
+  padding:.9rem 2rem;border-radius:2rem;
+  text-decoration:none;font-size:.85rem;
+  display:inline-block;
 }
-.hero-right-noise{
-position:absolute;inset:0;
-background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=’.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=’.04’/%3E%3C/svg%3E”);
-opacity:.6;
-}
-.hero-right-rule{
-position:absolute;top:0;left:0;right:0;bottom:0;
-background:
-linear-gradient(rgba(58,107,80,.05) 1px, transparent 1px),
-linear-gradient(90deg, rgba(58,107,80,.05) 1px, transparent 1px);
-background-size:48px 48px;
-}
-.hero-mono{
-position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-font-family:var(–display);font-size:clamp(8rem,18vw,16rem);font-weight:300;
-color:rgba(255,255,255,.04);letter-spacing:-.05em;user-select:none;line-height:1;
-}
-.hero-panel-info{
-position:relative;z-index:2;padding:2.5rem;
-border-top:1px solid rgba(255,255,255,.08);
-}
-.hero-panel-name{
-font-family:var(–display);font-size:1rem;font-weight:600;
-letter-spacing:.06em;color:rgba(255,255,255,.9);margin-bottom:.3rem;
-}
-.hero-panel-title{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35)}
-.hero-stats{
-display:grid;grid-template-columns:repeat(3,1fr);
-border-bottom:1px solid rgba(255,255,255,.08);
-}
-.h-stat{padding:1.8rem 2rem;border-right:1px solid rgba(255,255,255,.08)}
-.h-stat:last-child{border-right:none}
-.h-stat-n{
-font-family:var(–display);font-size:2rem;font-weight:300;
-color:var(–off-white);line-height:1;margin-bottom:.3rem;
-}
-.h-stat-l{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3)}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+/* ===== SEÇÕES ===== */
+section{padding:6rem 5%}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:2.3rem;color:var(--v1);
+}
+.reveal{opacity:0;transform:translateY(30px);transition:.7s}
+.reveal.visible{opacity:1;transform:none}
 
-/* ─────────────────────────────────────────
-SERVIÇOS
-───────────────────────────────────────── */
-#servicos{padding:var(–section-y) var(–pad-x);background:var(–white)}
-.servicos-header{
-display:grid;grid-template-columns:1fr 1fr;gap:3rem;
-align-items:end;margin-bottom:4rem;
-padding-bottom:2.5rem;border-bottom:1px solid var(–ink-10);
-}
-.servicos-header .display{font-size:clamp(2.4rem,4.5vw,4rem)}
-.servicos-cta-col{display:flex;flex-direction:column;justify-content:flex-end;gap:1.2rem}
-.flow-row{
-display:flex;align-items:center;gap:0;
-padding-top:1.5rem;border-top:1px solid var(–ink-06);
-}
-.flow-step{display:flex;flex-direction:column;align-items:center;gap:.5rem;flex:1}
-.flow-num{
-width:36px;height:36px;border-radius:50%;border:1px solid var(–ink-10);
-display:flex;align-items:center;justify-content:center;
-font-family:var(–display);font-size:.85rem;color:var(–ink-60);
-transition:background var(–fast),border-color var(–fast),color var(–fast);
-}
-.flow-num.active{background:var(–sage);border-color:var(–sage);color:var(–white)}
-.flow-lbl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(–ink-30);text-align:center;max-width:64px;line-height:1.4}
-.flow-line{flex:1;height:1px;background:var(–ink-06);margin-bottom:1.5rem}
-.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(–ink-10)}
-.srv-card{
-background:var(–white);padding:2.5rem 2rem;
-display:flex;flex-direction:column;gap:1.2rem;
-transition:background var(–fast);position:relative;overflow:hidden;
-}
-.srv-card::after{
-content:’’;position:absolute;left:0;bottom:0;width:0;height:2px;
-background:var(–sage);transition:width var(–mid) var(–ease);
-}
-.srv-card:hover{background:var(–off-white)}
-.srv-card:hover::after{width:100%}
-.srv-num{font-family:var(–display);font-size:.75rem;font-weight:600;color:var(–sage);letter-spacing:.12em}
-.srv-icon-box{
-width:44px;height:44px;border:1px solid var(–ink-10);
-display:flex;align-items:center;justify-content:center;
-}
-.srv-icon-box svg{width:20px;height:20px;stroke:var(–ink-60);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.srv-name{font-family:var(–display);font-size:1.3rem;font-weight:400;color:var(–ink);line-height:1.2}
-.srv-text{font-size:.84rem;line-height:1.8;color:var(–ink-60);font-weight:300}
-
-/* ─────────────────────────────────────────
-POR QUE REGISTRAR
-───────────────────────────────────────── */
-#porque{padding:var(–section-y) var(–pad-x);background:var(–parchment)}
-.porque-layout{
-display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;margin-top:3.5rem;
-}
-.porque-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(–ink-10)}
-.pq-item{
-background:var(–parchment);padding:1.8rem;
-transition:background var(–fast);
-}
-.pq-item:hover{background:var(–warm-mid)}
-.pq-icon{
-font-size:1.3rem;width:36px;height:36px;
-display:flex;align-items:center;justify-content:center;
-margin-bottom:1rem;
-}
-.pq-title{font-size:.9rem;font-weight:500;color:var(–ink);margin-bottom:.4rem}
-.pq-text{font-size:.8rem;line-height:1.75;color:var(–ink-60);font-weight:300}
-.porque-cta{
-background:var(–ink);padding:3rem;
-position:sticky;top:7rem;
-display:flex;flex-direction:column;gap:1.6rem;
-}
-.pq-cta-title{font-family:var(–display);font-size:1.9rem;font-weight:300;color:var(–white);line-height:1.2}
-.pq-cta-title em{font-style:italic;color:var(–sage-lt)}
-.pq-cta-body{font-size:.85rem;line-height:1.85;color:rgba(255,255,255,.45);font-weight:300}
-.pq-cta-divider{width:100%;height:1px;background:rgba(255,255,255,.08)}
-.pq-stats{display:flex;gap:2.5rem}
-.pq-stat-n{font-family:var(–display);font-size:2rem;font-weight:300;color:var(–off-white);line-height:1}
-.pq-stat-l{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.3rem}
-
-/* ─────────────────────────────────────────
-SOBRE
-───────────────────────────────────────── */
-#sobre{padding:var(–section-y) var(–pad-x);background:var(–white)}
-.sobre-layout{display:grid;grid-template-columns:5fr 7fr;gap:5rem;align-items:center}
-.sobre-visual{position:relative}
-.sobre-frame{
-aspect-ratio:3/4;background:var(–parchment);
-position:relative;overflow:hidden;
-}
-.sobre-monogram{
-position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-font-family:var(–display);font-size:clamp(7rem,14vw,12rem);
-font-weight:300;color:rgba(20,20,20,.07);letter-spacing:-.04em;user-select:none;
-}
-.sobre-tag{
-position:absolute;bottom:0;left:0;right:0;
-padding:1.4rem;background:var(–ink);
-}
-.sobre-tag p{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.3rem}
-.sobre-tag strong{font-family:var(–display);font-size:1rem;font-weight:600;color:var(–white);font-style:italic}
-.sobre-deco{
-position:absolute;top:-1rem;right:-1rem;
-width:50%;height:50%;border:1px solid var(–sage-line);
-z-index:0;pointer-events:none;
-}
-.sobre-text-col{display:flex;flex-direction:column;gap:1.6rem}
-.sobre-text-col p{font-size:.97rem;line-height:1.9;color:var(–ink-60);font-weight:300}
-.formacoes{margin-top:.4rem}
-.form-row{
-display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;
-padding:1.1rem 0;border-bottom:1px solid var(–ink-06);
-}
-.form-row:first-child{border-top:1px solid var(–ink-06)}
-.form-dot{
-width:6px;height:6px;border-radius:50%;background:var(–sage);
-margin-top:7px;flex-shrink:0;
-}
-.form-tag{font-size:.62rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(–sage);margin-bottom:.2rem}
-.form-label{font-size:.9rem;font-weight:400;color:var(–ink)}
-
-/* ─────────────────────────────────────────
-FAQ
-───────────────────────────────────────── */
-#faq{padding:var(–section-y) var(–pad-x);background:var(–off-white)}
-.faq-layout{display:grid;grid-template-columns:5fr 7fr;gap:5rem;align-items:start}
-.faq-sticky{position:sticky;top:7rem;display:flex;flex-direction:column;gap:2rem}
-.faq-cta{background:var(–parchment);padding:2rem;display:flex;flex-direction:column;gap:1rem}
-.faq-cta-t{font-family:var(–display);font-size:1.2rem;font-weight:400;color:var(–ink)}
-.faq-cta-b{font-size:.82rem;line-height:1.75;color:var(–ink-60);font-weight:300}
-.faq-list{display:flex;flex-direction:column;border-top:1px solid var(–ink-10)}
-.faq-item{border-bottom:1px solid var(–ink-10)}
-.faq-q{
-width:100%;display:flex;align-items:center;justify-content:space-between;
-padding:1.35rem 0;gap:1.5rem;cursor:pointer;background:none;border:none;text-align:left;
-}
-.faq-q-t{font-size:.95rem;font-weight:400;color:var(–ink);line-height:1.4;transition:color var(–fast)}
-.faq-item:hover .faq-q-t{color:var(–sage)}
-.faq-toggle{
-width:26px;height:26px;border-radius:50%;border:1px solid var(–ink-10);
-flex-shrink:0;display:flex;align-items:center;justify-content:center;
-transition:background var(–fast),border-color var(–fast);
-}
-.faq-toggle svg{width:10px;height:10px;stroke:var(–ink-60);fill:none;stroke-width:2;stroke-linecap:round;transition:transform var(–mid) var(–ease),stroke var(–fast)}
-.faq-item.open .faq-toggle{background:var(–sage);border-color:var(–sage)}
-.faq-item.open .faq-toggle svg{transform:rotate(45deg);stroke:var(–white)}
-.faq-body{max-height:0;overflow:hidden;transition:max-height .5s var(–ease)}
-.faq-body-inner{padding:0 3rem 1.4rem 0}
-.faq-body-inner p{font-size:.88rem;line-height:1.85;color:var(–ink-60);font-weight:300}
-
-/* ─────────────────────────────────────────
-CONTATO
-───────────────────────────────────────── */
-#contato{padding:var(–section-y) var(–pad-x);background:var(–white)}
-.contato-layout{display:grid;grid-template-columns:5fr 7fr;gap:5rem;align-items:start}
-.contato-info{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
-.ci{
-display:flex;align-items:center;gap:1rem;
-padding:1rem 1.2rem;border:1px solid var(–ink-06);
-text-decoration:none;color:var(–ink);
-transition:border-color var(–fast),background var(–fast);
-}
-.ci:hover{border-color:var(–sage-line);background:var(–sage-pale)}
-.ci-icon{
-width:38px;height:38px;flex-shrink:0;
-border:1px solid var(–ink-10);
-display:flex;align-items:center;justify-content:center;
-}
-.ci-icon svg{width:18px;height:18px;fill:none;stroke:var(–ink-60);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.ci-label{font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(–ink-30);font-weight:400;margin-bottom:.2rem}
-.ci-val{font-size:.9rem;font-weight:400;color:var(–ink)}
-/* form */
-.form-wrap{display:flex;flex-direction:column;gap:.9rem}
-.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
-.fg{display:flex;flex-direction:column;gap:.4rem}
-.fl{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:var(–ink-60);font-weight:400}
-input[type=text],input[type=email],select,textarea{
-background:var(–parchment);border:1px solid transparent;border-bottom:1px solid var(–ink-10);
-padding:.8rem 1rem;font-family:var(–body);font-size:.88rem;font-weight:300;
-color:var(–ink);outline:none;width:100%;transition:border var(–fast),background var(–fast);border-radius:0;
--webkit-appearance:none;appearance:none;
-}
-input:focus,select:focus,textarea:focus{border-color:var(–sage);background:var(–white)}
-textarea{resize:vertical;min-height:110px}
-.f-submit{
-align-self:flex-start;padding:.8rem 2rem;
-background:var(–ink);color:var(–white);border:none;cursor:pointer;
-font-family:var(–body);font-size:.75rem;font-weight:400;
-letter-spacing:.14em;text-transform:uppercase;
-transition:background var(–fast),transform var(–fast);
-}
-.f-submit:hover{background:var(–sage);transform:translateY(-1px)}
-
-/* ─────────────────────────────────────────
-FOOTER
-───────────────────────────────────────── */
-footer{background:var(–ink);padding:4rem var(–pad-x) 2.5rem}
-.footer-top{
-display:flex;align-items:flex-start;justify-content:space-between;
-flex-wrap:wrap;gap:2rem;padding-bottom:2.5rem;
-border-bottom:1px solid rgba(255,255,255,.07);
-}
-.footer-logo{font-family:var(–display);font-size:1.2rem;font-weight:600;color:var(–white)}
-.footer-logo em{font-style:italic;font-weight:300;color:var(–sage-lt)}
-.footer-sub{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:.4rem}
-.footer-nav{display:flex;flex-wrap:wrap;gap:1.5rem;list-style:none;align-items:center}
-.footer-nav a{
-font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-color:rgba(255,255,255,.35);text-decoration:none;transition:color var(–fast);
-}
-.footer-nav a:hover{color:var(–sage-lt)}
-.footer-social{display:flex;gap:.7rem}
-.footer-soc-btn{
-width:34px;height:34px;border:1px solid rgba(255,255,255,.1);
-display:flex;align-items:center;justify-content:center;
-transition:border-color var(–fast),background var(–fast);
-}
-.footer-soc-btn:hover{border-color:var(–sage);background:var(–sage-pale)}
-.footer-soc-btn svg{width:15px;height:15px;fill:none;stroke:rgba(255,255,255,.5);stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
-.footer-soc-btn.wa svg{fill:rgba(255,255,255,.5);stroke:none}
-.footer-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:2rem}
-.footer-copy{font-size:.7rem;color:rgba(255,255,255,.2)}
-.footer-oab{font-size:.7rem;color:rgba(58,107,80,.5)}
-
-/* ─────────────────────────────────────────
-FLOATING BUTTONS  (fixed, bottom-right)
-───────────────────────────────────────── */
-.floats{
-position:fixed;bottom:1.8rem;right:1.8rem;z-index:400;
-display:flex;flex-direction:column;gap:.7rem;align-items:flex-end;
-}
-.float-item{position:relative;display:flex;align-items:center}
-.float-tip{
-position:absolute;right:calc(100% + .7rem);
-background:var(–ink);color:var(–white);
-font-size:.68rem;letter-spacing:.1em;white-space:nowrap;
-padding:.28rem .65rem;pointer-events:none;
-opacity:0;transform:translateX(4px);
-transition:opacity var(–fast) var(–ease),transform var(–fast) var(–ease);
-}
-.float-item:hover .float-tip{opacity:1;transform:none}
-.float-btn{
-width:48px;height:48px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-text-decoration:none;cursor:pointer;
-transition:transform var(–fast) var(–ease),box-shadow var(–fast);
-box-shadow:0 4px 16px rgba(0,0,0,.18);
-}
-.float-btn:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(0,0,0,.24)}
-/* WhatsApp */
-.float-wa{background:#25d366}
-.float-wa svg{width:24px;height:24px;fill:#fff}
-/* Instagram — inline SVG, no fill issues */
-.float-ig{
-background:conic-gradient(
-from 225deg,
-#f9ed32 0deg,#ee2a7b 120deg,#002aff 180deg,#ee2a7b 240deg,#f9ed32 360deg
-);
-}
-.float-ig svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-
-/* ─────────────────────────────────────────
-BACK TO TOP
-───────────────────────────────────────── */
-.btt{
-position:fixed;bottom:6rem;right:1.9rem;z-index:399;
-width:36px;height:36px;border:1px solid var(–ink-10);background:var(–white);
-cursor:pointer;display:flex;align-items:center;justify-content:center;
-opacity:0;pointer-events:none;transition:opacity var(–fast),background var(–fast);
-}
-.btt.show{opacity:1;pointer-events:auto}
-.btt:hover{background:var(–off-white)}
-.btt svg{width:14px;height:14px;stroke:var(–ink-60);fill:none;stroke-width:1.8;stroke-linecap:round}
-
-/* ─────────────────────────────────────────
-TOAST
-───────────────────────────────────────── */
-.toast{
-position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(70px);
-background:var(–ink);color:var(–white);
-font-size:.8rem;letter-spacing:.06em;
-padding:.75rem 1.6rem;z-index:9999;
-transition:transform var(–mid) var(–ease);box-shadow:0 4px 20px rgba(0,0,0,.2);
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* ─────────────────────────────────────────
-RESPONSIVE
-───────────────────────────────────────── */
-@media(max-width:960px){
-#hero{grid-template-columns:1fr}
-.hero-right{display:none}
-.hero-left{min-height:100svh}
-.servicos-header{grid-template-columns:1fr}
-.srv-grid{grid-template-columns:1fr}
-.porque-layout,.sobre-layout,.faq-layout,.contato-layout{grid-template-columns:1fr}
-.faq-sticky{position:relative;top:0}
-.sobre-deco{display:none}
-.f-row{grid-template-columns:1fr}
-.footer-top{flex-direction:column}
-.nav-links,.nav-cta{display:none}
-.nav-ham{display:flex}
-.hero-stats{grid-template-columns:repeat(3,1fr)}
-.porque-cta{position:relative;top:0}
-}
-@media(max-width:600px){
-.porque-grid{grid-template-columns:1fr}
-.hero-stats{grid-template-columns:repeat(2,1fr)}
-.pq-stats{flex-direction:column;gap:1.2rem}
+/* ===== FOOTER ===== */
+footer{
+  background:var(--v1);color:#fff;
+  padding:3rem 5%;
+  font-size:.75rem;
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-<div class="cur-dot" id="curDot"></div>
-<div class="cur-ring" id="curRing"></div>
-
-<!-- LOADER -->
-
-<div id="loader">
-  <div class="ld-name">Andriely <b>Lemos</b></div>
-  <div class="ld-bar"><i></i></div>
+<div class="loader" id="loader">
+  <div class="loader-logo">Andriely <span style="color:#d4a83c">Lemos</span></div>
+  <div class="loader-bar"></div>
 </div>
 
-<!-- NAV -->
-
-<nav id="nav">
-  <a href="#hero" class="nav-logo">Andriely <em>Lemos</em></a>
+<nav id="navbar">
+  <a href="#inicio" class="nav-logo">Andriely <span>Lemos</span></a>
   <ul class="nav-links">
-    <li><a href="#servicos">Serviços</a></li>
-    <li><a href="#porque">Por que registrar</a></li>
+    <li><a href="#inicio">Início</a></li>
     <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#faq">FAQ</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
-  <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Vim+pelo+site+e+gostaria+de+saber+mais." target="_blank" rel="noopener" class="nav-cta">WhatsApp</a>
-  <button class="nav-ham" id="navHam" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="https://wa.me/5527999999999" class="nav-wa" target="_blank">WhatsApp</a>
 </nav>
 
-<!-- MOBILE NAV -->
-
-<div class="mob-nav" id="mobNav">
-  <a href="#servicos" onclick="closeMob()">Serviços</a>
-  <a href="#porque" onclick="closeMob()">Por que registrar</a>
-  <a href="#sobre" onclick="closeMob()">Sobre</a>
-  <a href="#faq" onclick="closeMob()">FAQ</a>
-  <a href="#contato" onclick="closeMob()">Contato</a>
-</div>
-
-<!-- ══════════════ HERO ══════════════ -->
-
-<section id="hero">
-  <div class="hero-left">
-    <p class="hero-eyebrow"><span>Assessoria Jurídica</span> · Registro de Marcas</p>
-
-```
-<h1 class="hero-h1">
-  Proteja a identidade<br>
-  <em>do seu negócio</em>
-</h1>
-
-<p class="hero-sub body-lg">
-  Acompanhamento completo no INPI — da pesquisa de anterioridade à concessão definitiva. Segurança jurídica para o seu maior ativo.
-</p>
-
-<div class="hero-actions">
-  <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Quero+registrar+minha+marca." target="_blank" rel="noopener" class="btn-dark">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Registrar minha marca
-  </a>
-  <a href="#servicos" class="btn-ghost">Ver serviços</a>
-</div>
-
-<div class="hero-scroll-hint">
-  <span>Role para explorar</span>
-  <div class="scroll-track"></div>
-</div>
-```
-
-  </div>
-
-  <div class="hero-right">
-    <div class="hero-right-noise"></div>
-    <div class="hero-right-rule"></div>
-    <div class="hero-mono">AL</div>
-    <div class="hero-stats">
-      <div class="h-stat"><div class="h-stat-n">INPI</div><div class="h-stat-l">Especialista</div></div>
-      <div class="h-stat"><div class="h-stat-n">100%</div><div class="h-stat-l">Dedicação</div></div>
-      <div class="h-stat"><div class="h-stat-n">2+</div><div class="h-stat-l">Pós-grad.</div></div>
-    </div>
-    <div class="hero-panel-info">
-      <div class="hero-panel-name">Andriely Lemos</div>
-      <div class="hero-panel-title">Assessora Jurídica · Propriedade Intelectual</div>
-    </div>
+<section class="hero" id="inicio">
+  <div class="hero-content reveal">
+    <h1 class="hero-title">Proteja o nome do<br><em>seu negócio</em></h1>
+    <p class="hero-sub">
+      Registro de marcas no INPI com acompanhamento completo.
+    </p>
+    <a href="https://wa.me/5527999999999" target="_blank" class="btn-gold">
+      Registrar minha marca
+    </a>
   </div>
 </section>
-
-<!-- ══════════════ SERVIÇOS ══════════════ -->
-
-<section id="servicos">
-  <div class="servicos-header sr">
-    <div>
-      <p class="kicker">Serviços</p>
-      <h2 class="display">Como posso<br>ajudar <em>você</em></h2>
-    </div>
-    <div class="servicos-cta-col">
-      <p class="body-sm">Atuação completa no processo de registro de marcas — da pesquisa inicial à concessão definitiva pelo INPI.</p>
-      <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Tenho+interesse+nos+serviços." target="_blank" rel="noopener" class="btn-dark" style="align-self:flex-start">Consulta gratuita</a>
-    </div>
-  </div>
-
-  <div class="srv-grid sr d1">
-    <div class="srv-card">
-      <span class="srv-num">01</span>
-      <div class="srv-icon-box">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </div>
-      <h3 class="srv-name">Pesquisa de Anterioridade</h3>
-      <p class="srv-text">Análise completa da base do INPI para verificar se sua marca já está registrada, evitando conflitos e recusas antes do depósito.</p>
-    </div>
-    <div class="srv-card">
-      <span class="srv-num">02</span>
-      <div class="srv-icon-box">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      </div>
-      <h3 class="srv-name">Depósito do Pedido</h3>
-      <p class="srv-text">Elaboração e protocolo do pedido no INPI com documentação completa, na classe certa para o seu segmento de negócio.</p>
-    </div>
-    <div class="srv-card">
-      <span class="srv-num">03</span>
-      <div class="srv-icon-box">
-        <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-      </div>
-      <h3 class="srv-name">Acompanhamento Processual</h3>
-      <p class="srv-text">Monitoramento contínuo do andamento, resposta a exigências e recursos administrativos para maximizar as chances de concessão.</p>
-    </div>
-  </div>
-
-  <div class="flow-row sr d2">
-    <div class="flow-step"><div class="flow-num active">1</div><div class="flow-lbl">Consulta inicial</div></div>
-    <div class="flow-line"></div>
-    <div class="flow-step"><div class="flow-num active">2</div><div class="flow-lbl">Pesquisa</div></div>
-    <div class="flow-line"></div>
-    <div class="flow-step"><div class="flow-num active">3</div><div class="flow-lbl">Depósito</div></div>
-    <div class="flow-line"></div>
-    <div class="flow-step"><div class="flow-num">4</div><div class="flow-lbl">Exame INPI</div></div>
-    <div class="flow-line"></div>
-    <div class="flow-step"><div class="flow-num">✓</div><div class="flow-lbl">Concessão</div></div>
-  </div>
-</section>
-
-<!-- ══════════════ POR QUE ══════════════ -->
-
-<section id="porque">
-  <div class="sr">
-    <p class="kicker">Por que registrar?</p>
-    <h2 class="display" style="font-size:clamp(2.4rem,4.5vw,4rem)">Sua marca sem proteção<br>é um <em>risco real</em></h2>
-  </div>
-
-  <div class="porque-layout" style="margin-top:3.5rem">
-    <div class="porque-grid sr d1">
-      <div class="pq-item"><div class="pq-icon">🛡️</div><div class="pq-title">Exclusividade garantida</div><p class="pq-text">Nenhum concorrente pode usar sua marca ou nome no mesmo segmento de mercado.</p></div>
-      <div class="pq-item"><div class="pq-icon">⚖️</div><div class="pq-title">Segurança jurídica</div><p class="pq-text">Você pode acionar legalmente quem copiar ou se apropriar da sua identidade.</p></div>
-      <div class="pq-item"><div class="pq-icon">💼</div><div class="pq-title">Valorização do negócio</div><p class="pq-text">Marca registrada agrega valor e facilita negociações, investimentos e franquias.</p></div>
-      <div class="pq-item"><div class="pq-icon">🌐</div><div class="pq-title">Presença digital</div><p class="pq-text">Garante seu direito ao domínio e redes sociais sem disputas com terceiros.</p></div>
-      <div class="pq-item"><div class="pq-icon">📈</div><div class="pq-title">Credibilidade</div><p class="pq-text">Transmite profissionalismo e confiança para clientes, parceiros e investidores.</p></div>
-      <div class="pq-item"><div class="pq-icon">🚫</div><div class="pq-title">Evita processos</div><p class="pq-text">Quem registra primeiro tem prioridade — sem registro, você arrisca ser processado.</p></div>
-    </div>
-
-```
-<div class="porque-cta sr d2">
-  <h3 class="pq-cta-title">Você sabia que sem o registro, <em>outra pessoa pode registrar sua marca?</em></h3>
-  <p class="pq-cta-body">No Brasil, o direito à marca pertence a quem registra primeiro no INPI — não a quem usa há mais tempo. Empresários que demoram para registrar correm o risco de perder o próprio nome para um concorrente.</p>
-  <div class="pq-cta-divider"></div>
-  <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Quero+proteger+minha+marca." target="_blank" rel="noopener" class="btn-dark" style="align-self:flex-start">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Quero proteger minha marca
-  </a>
-  <div class="pq-stats">
-    <div><div class="pq-stat-n">10 anos</div><div class="pq-stat-l">de proteção renovável</div></div>
-    <div><div class="pq-stat-n">INPI</div><div class="pq-stat-l">Órgão federal responsável</div></div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- ══════════════ SOBRE ══════════════ -->
 
 <section id="sobre">
-  <div class="sobre-layout">
-    <div class="sobre-visual sr">
-      <div class="sobre-frame">
-        <div class="sobre-monogram">AL</div>
-        <div class="sobre-tag">
-          <p>Assessora Jurídica</p>
-          <strong>Andriely Lemos</strong>
-        </div>
-      </div>
-      <div class="sobre-deco"></div>
-    </div>
-
-```
-<div class="sr d1">
-  <p class="kicker">Sobre</p>
-  <h2 class="display" style="font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:2rem">Quem vai cuidar<br>da sua <em>marca</em></h2>
-  <div class="sobre-text-col">
-    <p>Andriely Lemos é assessora jurídica especializada em registro de marcas, com dedicação completa à proteção da identidade empresarial dos seus clientes junto ao INPI.</p>
-    <p>Com visão ampla e humanizada do direito, alia rigor técnico a um atendimento próximo e transparente — tornando cada etapa do processo compreensível e segura para o cliente.</p>
-  </div>
-  <div class="formacoes" style="margin-top:2rem">
-    <div class="form-row">
-      <div class="form-dot"></div>
-      <div><div class="form-tag">Pós-graduação em andamento</div><div class="form-label">Direito Penal e Processo Penal</div></div>
-    </div>
-    <div class="form-row">
-      <div class="form-dot"></div>
-      <div><div class="form-tag">Pós-graduação em andamento</div><div class="form-label">Psicologia Jurídica</div></div>
-    </div>
-    <div class="form-row">
-      <div class="form-dot" style="background:var(--ink-60)"></div>
-      <div><div class="form-tag">Especialidade principal</div><div class="form-label">Registro e Proteção de Marcas — INPI</div></div>
-    </div>
-  </div>
-</div>
-```
-
+  <div class="reveal">
+    <h2 class="section-title">Sobre</h2>
+    <p style="max-width:600px;color:var(--t2)">
+      Assessoria jurídica especializada em registro e proteção de marcas junto ao INPI.
+    </p>
   </div>
 </section>
-
-<!-- ══════════════ FAQ ══════════════ -->
-
-<section id="faq">
-  <div class="faq-layout">
-    <div class="faq-sticky sr">
-      <div>
-        <p class="kicker">FAQ</p>
-        <h2 class="display" style="font-size:clamp(2.2rem,4vw,3.5rem)">Dúvidas<br><em>frequentes</em></h2>
-        <p class="body-sm" style="margin-top:1rem">As perguntas que meus clientes mais fazem. Não encontrou o que procurava?</p>
-      </div>
-      <div class="faq-cta">
-        <div class="faq-cta-t">Ainda tem dúvidas?</div>
-        <p class="faq-cta-b">Mande uma mensagem e responderei em até 24 horas com atenção personalizada.</p>
-        <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Tenho+uma+dúvida+sobre+registro+de+marca." target="_blank" rel="noopener" class="btn-dark" style="align-self:flex-start;font-size:.72rem">Falar no WhatsApp</a>
-      </div>
-    </div>
-
-```
-<div class="faq-list sr d1" id="faqList">
-  <div class="faq-item open">
-    <button class="faq-q">
-      <span class="faq-q-t">Quanto tempo demora o registro de uma marca?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>O processo de registro no INPI leva em média de 18 a 36 meses até a concessão definitiva. No entanto, assim que o pedido é depositado, você já tem proteção provisória e pode usar o símbolo ™ na sua marca. A partir da concessão, utiliza-se o símbolo ®.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">Qualquer tipo de marca pode ser registrada?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>Podem ser registradas marcas nominativas (nome), figurativas (logo/imagem), mistas (nome + imagem) e tridimensionais (forma do produto). O importante é que a marca seja distintiva e não seja semelhante a marcas já registradas no mesmo segmento.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">O que é a pesquisa de anterioridade e por que é importante?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>É a análise da base do INPI para verificar se já existe uma marca igual ou semelhante no mesmo segmento. É essencial para evitar que seu pedido seja indeferido e para não investir em uma identidade que precisará ser trocada no futuro.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">Posso usar minha marca antes do registro ser concluído?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>Sim. Após o depósito do pedido, você já pode usar a marca com o símbolo ™ e conta com proteção preliminar. A concessão definitiva — com ® — ocorre ao final do processo, mas o uso é permitido desde o depósito, desde que o pedido não seja indeferido.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">O que acontece se minha marca for recusada pelo INPI?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>Em caso de exigências ou indeferimento, é possível responder ou apresentar recurso administrativo. Acompanho todo esse processo, elaborando manifestações técnicas fundamentadas para reverter a decisão quando possível.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">A proteção da marca vale em todo o Brasil?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>Sim. O registro no INPI garante proteção em todo o território nacional. Para proteção internacional, existem tratados como o Protocolo de Madri. Se você pretende atuar em outros países, podemos conversar sobre as opções.</p></div></div>
-  </div>
-  <div class="faq-item">
-    <button class="faq-q">
-      <span class="faq-q-t">Por quanto tempo a marca fica protegida?</span>
-      <div class="faq-toggle"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-    </button>
-    <div class="faq-body"><div class="faq-body-inner"><p>O registro tem validade de 10 anos, contados da concessão, e pode ser renovado por períodos iguais e sucessivos — indefinidamente. Acompanho os prazos de renovação para que sua marca nunca fique desprotegida.</p></div></div>
-  </div>
-</div>
-```
-
-  </div>
-</section>
-
-<!-- ══════════════ CONTATO ══════════════ -->
 
 <section id="contato">
-  <div class="contato-layout">
-    <div class="sr">
-      <p class="kicker">Contato</p>
-      <h2 class="display" style="font-size:clamp(2.4rem,4.5vw,4rem);margin-bottom:1rem">Vamos proteger<br>sua <em>marca juntos</em></h2>
-      <p class="body-sm" style="margin-bottom:.5rem">Entre em contato para uma consulta inicial. Resposta em até 24 horas.</p>
-      <div class="contato-info">
-        <div class="ci">
-          <div class="ci-icon">
-            <svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 0 0 2.22 0L21 8M5 19h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg>
-          </div>
-          <div><div class="ci-label">E-mail</div><div class="ci-val">andriely.lemos@email.com.br</div></div>
-        </div>
-        <a href="https://wa.me/5527999999999" target="_blank" rel="noopener" class="ci">
-          <div class="ci-icon" style="border-color:rgba(37,211,102,.25)">
-            <svg viewBox="0 0 24 24" fill="#25d366" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          </div>
-          <div><div class="ci-label">WhatsApp — clique para falar</div><div class="ci-val">(27) 9 9999-9999</div></div>
-        </a>
-        <a href="https://instagram.com/andrielylemos" target="_blank" rel="noopener" class="ci">
-          <div class="ci-icon" style="border-color:rgba(193,53,132,.2)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#c13584" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-          </div>
-          <div><div class="ci-label">Instagram — clique para seguir</div><div class="ci-val">@andrielylemos</div></div>
-        </a>
-      </div>
-    </div>
-
-```
-<form class="form-wrap sr d1" id="contactForm">
-  <div class="f-row">
-    <div class="fg"><label class="fl">Nome</label><input type="text" placeholder="Seu nome completo" required></div>
-    <div class="fg"><label class="fl">Empresa</label><input type="text" placeholder="Nome do negócio"></div>
-  </div>
-  <div class="fg"><label class="fl">E-mail</label><input type="email" placeholder="seu@email.com" required></div>
-  <div class="fg">
-    <label class="fl">Serviço</label>
-    <select>
-      <option value="">Selecione o serviço desejado</option>
-      <option>Pesquisa de Anterioridade</option>
-      <option>Registro de Marca</option>
-      <option>Acompanhamento de Pedido</option>
-      <option>Renovação de Marca</option>
-      <option>Resposta a Exigência</option>
-      <option>Outro</option>
-    </select>
-  </div>
-  <div class="fg"><label class="fl">Mensagem</label><textarea placeholder="Descreva brevemente sua necessidade…"></textarea></div>
-  <button type="submit" class="f-submit">Enviar mensagem</button>
-</form>
-```
-
+  <div class="reveal">
+    <h2 class="section-title">Contato</h2>
+    <p>Fale diretamente comigo pelo WhatsApp.</p>
   </div>
 </section>
 
-<!-- ══════════════ FOOTER ══════════════ -->
-
 <footer>
-  <div class="footer-top">
-    <div>
-      <div class="footer-logo">Andriely <em>Lemos</em></div>
-      <div class="footer-sub">Assessoria Jurídica · Registro de Marcas · INPI</div>
-    </div>
-    <ul class="footer-nav">
-      <li><a href="#servicos">Serviços</a></li>
-      <li><a href="#porque">Por que registrar</a></li>
-      <li><a href="#sobre">Sobre</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="#contato">Contato</a></li>
-    </ul>
-    <div class="footer-social">
-      <!-- WhatsApp -->
-      <a href="https://wa.me/5527999999999" target="_blank" rel="noopener" class="footer-soc-btn wa" aria-label="WhatsApp">
-        <svg viewBox="0 0 24 24"><path fill="rgba(255,255,255,.5)" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      </a>
-      <!-- Instagram -->
-      <a href="https://instagram.com/andrielylemos" target="_blank" rel="noopener" class="footer-soc-btn" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-      </a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Andriely Lemos. Todos os direitos reservados.</p>
-    <p class="footer-oab">Assessoria Jurídica Especializada em Marcas</p>
-  </div>
+  © 2025 Andriely Lemos · Todos os direitos reservados
 </footer>
 
-<!-- FLOATING BUTTONS -->
-
-<div class="floats">
-  <!-- Instagram -->
-  <div class="float-item">
-    <span class="float-tip">Instagram</span>
-    <a href="https://instagram.com/andrielylemos" target="_blank" rel="noopener" class="float-btn float-ig" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5"/>
-        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-      </svg>
-    </a>
-  </div>
-  <!-- WhatsApp -->
-  <div class="float-item">
-    <span class="float-tip">Falar no WhatsApp</span>
-    <a href="https://wa.me/5527999999999?text=Olá%2C+Andriely%21+Vim+pelo+site+e+gostaria+de+saber+mais." target="_blank" rel="noopener" class="float-btn float-wa" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24" fill="#fff">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-      </svg>
-    </a>
-  </div>
-</div>
-
-<!-- BACK TO TOP -->
-
-<button class="btt" id="btt" aria-label="Voltar ao topo">
-  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
-
-<!-- TOAST -->
-
-<div class="toast" id="toast">Mensagem enviada com sucesso ✓</div>
-
-<!-- ══════════════ JS ══════════════ -->
-
 <script>
-/* Loader */
-window.addEventListener('load', () => setTimeout(() => document.getElementById('loader').classList.add('out'), 1800));
+/* LOADER */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'),1200)
+})
 
-/* Custom cursor */
-const dot = document.getElementById('curDot'), ring = document.getElementById('curRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-if (matchMedia('(hover:hover)').matches) {
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.cssText = `left:${mx}px;top:${my}px`; });
-  (function tick() { rx += (mx - rx) * .13; ry += (my - ry) * .13; ring.style.cssText = `left:${rx}px;top:${ry}px`; requestAnimationFrame(tick); })();
-  document.querySelectorAll('a,button,.srv-card,.pq-item,.ci,.faq-q').forEach(el => {
-    el.addEventListener('mouseenter', () => { ring.style.width = ring.style.height = '50px'; ring.style.opacity = '.25'; dot.style.transform = 'translate(-50%,-50%) scale(.5)'; });
-    el.addEventListener('mouseleave', () => { ring.style.width = ring.style.height = '32px'; ring.style.opacity = '.4'; dot.style.transform = 'translate(-50%,-50%) scale(1)'; });
-  });
+/* CURSOR */
+if(window.matchMedia('(pointer:fine)').matches){
+  const c=document.getElementById('cursor')
+  const r=document.getElementById('cursorRing')
+  let x=0,y=0,rx=0,ry=0
+  document.addEventListener('mousemove',e=>{
+    x=e.clientX;y=e.clientY
+    c.style.left=x+'px';c.style.top=y+'px'
+  })
+  function loop(){
+    rx+=(x-rx)*.15;ry+=(y-ry)*.15
+    r.style.left=rx+'px';r.style.top=ry+'px'
+    requestAnimationFrame(loop)
+  }
+  loop()
 }
 
-/* Nav */
-const nav = document.getElementById('nav');
-const onScroll = () => {
-  nav.classList.toggle('solid', scrollY > 60);
-  bttBtn.classList.toggle('show', scrollY > 500);
-};
-window.addEventListener('scroll', onScroll, { passive: true });
+/* NAV SCROLL */
+const nav=document.getElementById('navbar')
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60)
+})
 
-/* Mobile nav */
-const ham = document.getElementById('navHam'), mob = document.getElementById('mobNav');
-ham.addEventListener('click', () => { const o = mob.style.display !== 'flex'; mob.style.display = o ? 'flex' : 'none'; requestAnimationFrame(() => mob.classList.toggle('open', o)); ham.classList.toggle('open', o); });
-function closeMob() { mob.classList.remove('open'); ham.classList.remove('open'); setTimeout(() => mob.style.display = 'none', 350); }
+/* REVEAL */
+const obs=new IntersectionObserver(e=>{
+  e.forEach(i=>{
+    if(i.isIntersecting){
+      i.target.classList.add('visible')
+      obs.unobserve(i.target)
+    }
+  })
+},{threshold:.1})
 
-/* Scroll reveal */
-const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } }), { threshold: .12 });
-document.querySelectorAll('.sr').forEach(el => observer.observe(el));
-
-/* FAQ */
-const firstItem = document.querySelector('.faq-item.open');
-if (firstItem) firstItem.querySelector('.faq-body').style.maxHeight = firstItem.querySelector('.faq-body-inner').scrollHeight + 'px';
-document.getElementById('faqList').addEventListener('click', e => {
-  const item = e.target.closest('.faq-item'); if (!item) return;
-  const wasOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => { i.classList.remove('open'); i.querySelector('.faq-body').style.maxHeight = '0'; });
-  if (!wasOpen) { item.classList.add('open'); item.querySelector('.faq-body').style.maxHeight = item.querySelector('.faq-body-inner').scrollHeight + 'px'; }
-});
-
-/* Form */
-document.getElementById('contactForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const btn = e.target.querySelector('.f-submit');
-  btn.textContent = 'Enviando…'; btn.disabled = true;
-  setTimeout(() => {
-    e.target.reset(); btn.textContent = 'Enviar mensagem'; btn.disabled = false;
-    const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3500);
-  }, 1000);
-});
-
-/* Back to top */
-const bttBtn = document.getElementById('btt');
-bttBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el))
 </script>
 
 </body>
