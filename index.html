@@ -10,36 +10,66 @@
 
 <style>
 
-:root{
---black:#0f0f0f;
---text:#2b2b2b;
---soft:#777;
---accent:#2f5e4e;
---bg:#fafafa;
---font-title:'Cormorant Garamond',serif;
---font-body:'Outfit',sans-serif;
-}
-
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box}
 
-body{
-font-family:var(--font-body);
-background:var(--bg);
-color:var(--text);
+/* VARIÁVEIS */
+:root{
+--bg:#f9f9f7;
+--black:#111;
+--soft:#6b6b6b;
+--line:rgba(0,0,0,.08);
+--accent:#345e50;
+
+--title:'Cormorant Garamond', serif;
+--body:'Outfit', sans-serif;
 }
 
-.container{
+/* BASE */
+body{
+font-family:var(--body);
+background:var(--bg);
+color:var(--black);
+line-height:1.6;
+overflow-x:hidden;
+}
+
+/* CONTAINER */
+.wrap{
 max-width:1200px;
 margin:auto;
 padding:0 2rem;
 }
 
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:1.2rem 2rem;
+display:flex;
+justify-content:space-between;
+align-items:center;
+z-index:1000;
+background:rgba(255,255,255,.8);
+backdrop-filter:blur(10px);
+border-bottom:1px solid var(--line);
+}
+
+nav a{
+text-decoration:none;
+color:var(--black);
+font-size:.75rem;
+letter-spacing:.15em;
+text-transform:uppercase;
+}
+
 /* HERO */
 
 .hero{
-min-height:100vh;
+height:100vh;
 display:grid;
-grid-template-columns:1fr 1fr;
+grid-template-columns:1.2fr 1fr;
 }
 
 .hero-left{
@@ -47,47 +77,47 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 padding:6rem;
+animation:fadeUp 1.2s ease;
 }
 
-.hero-title{
-font-family:var(--font-title);
-font-size:4rem;
+.hero h1{
+font-family:var(--title);
+font-size:clamp(3rem,5vw,5rem);
 font-weight:300;
-line-height:1.1;
+line-height:1.05;
 margin-bottom:2rem;
 }
 
-.hero-sub{
+.hero p{
 color:var(--soft);
-font-size:1rem;
-line-height:1.8;
-margin-bottom:3rem;
 max-width:420px;
+margin-bottom:3rem;
 }
 
 .btn{
+padding:14px 28px;
 background:var(--black);
 color:#fff;
-padding:14px 28px;
-text-decoration:none;
-font-size:.8rem;
+border:none;
 letter-spacing:.15em;
-text-transform:uppercase;
-border:1px solid var(--black);
+font-size:.75rem;
+cursor:pointer;
 transition:.3s;
 }
 
 .btn:hover{
 background:var(--accent);
-border-color:var(--accent);
+transform:translateY(-2px);
 }
 
-.hero-photo{
+/* FOTO HERO */
+
+.hero-right{
 position:relative;
 overflow:hidden;
 }
 
-.hero-photo img{
+.hero-right img{
 width:100%;
 height:100%;
 object-fit:cover;
@@ -97,41 +127,41 @@ filter:grayscale(20%);
 .hero-overlay{
 position:absolute;
 inset:0;
-background:linear-gradient(to top, rgba(0,0,0,.6), transparent);
+background:linear-gradient(to top, rgba(0,0,0,.7), transparent 60%);
 }
 
-.hero-info{
+.hero-card{
 position:absolute;
 bottom:40px;
 left:40px;
 color:#fff;
 }
 
-.hero-info h3{
-font-family:var(--font-title);
+.hero-card h3{
+font-family:var(--title);
 font-size:1.3rem;
-font-weight:400;
 }
 
-.hero-info p{
+.hero-card span{
 font-size:.7rem;
 letter-spacing:.15em;
 opacity:.7;
-margin-top:.3rem;
 }
 
-/* SECTION */
+/* SEÇÕES */
 
 .section{
 padding:8rem 0;
 }
 
 .section h2{
-font-family:var(--font-title);
+font-family:var(--title);
 font-size:3rem;
 font-weight:300;
-margin-bottom:2rem;
+margin-bottom:3rem;
 }
+
+/* SERVIÇOS */
 
 .grid{
 display:grid;
@@ -140,27 +170,26 @@ gap:2rem;
 }
 
 .card{
-padding:2rem;
-border:1px solid rgba(0,0,0,.06);
 background:#fff;
-transition:.3s;
+padding:2.5rem;
+border:1px solid var(--line);
+transition:.4s;
 }
 
 .card:hover{
+transform:translateY(-8px);
 border-color:rgba(0,0,0,.2);
-transform:translateY(-5px);
 }
 
 .card h3{
-font-family:var(--font-title);
-font-size:1.3rem;
+font-family:var(--title);
+font-size:1.4rem;
 margin-bottom:1rem;
 }
 
 .card p{
-font-size:.9rem;
 color:var(--soft);
-line-height:1.7;
+font-size:.9rem;
 }
 
 /* SOBRE */
@@ -168,20 +197,19 @@ line-height:1.7;
 .sobre{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:4rem;
+gap:5rem;
 align-items:center;
 }
 
 .sobre img{
 width:100%;
-height:500px;
+height:520px;
 object-fit:cover;
 }
 
-.sobre-text p{
-margin-bottom:1rem;
-line-height:1.8;
+.sobre p{
 color:var(--soft);
+margin-bottom:1rem;
 }
 
 /* CTA */
@@ -189,20 +217,33 @@ color:var(--soft);
 .cta{
 background:var(--black);
 color:#fff;
-padding:6rem 2rem;
 text-align:center;
+padding:7rem 2rem;
 }
 
 .cta h2{
-font-family:var(--font-title);
+font-family:var(--title);
 font-size:3rem;
 font-weight:300;
-margin-bottom:1.5rem;
+margin-bottom:1rem;
 }
 
 .cta p{
 opacity:.7;
 margin-bottom:2rem;
+}
+
+/* SCROLL ANIM */
+
+.fade{
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+.fade.show{
+opacity:1;
+transform:translateY(0);
 }
 
 /* FOOTER */
@@ -211,133 +252,135 @@ footer{
 padding:3rem;
 text-align:center;
 font-size:.8rem;
-color:#777;
+color:#aaa;
+border-top:1px solid var(--line);
 }
 
-/* RESPONSIVE */
+/* KEYFRAMES */
+@keyframes fadeUp{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* RESPONSIVO */
 
 @media(max-width:900px){
-.hero{
-grid-template-columns:1fr;
-}
-.hero-left{
-padding:3rem;
-}
-.grid{
-grid-template-columns:1fr;
-}
-.sobre{
-grid-template-columns:1fr;
-}
+.hero{grid-template-columns:1fr}
+.hero-left{padding:3rem}
+.grid{grid-template-columns:1fr}
+.sobre{grid-template-columns:1fr}
 }
 
 </style>
+
 </head>
 
 <body>
 
+<nav>
+<a href="#">Andriely Lemos</a>
+<a href="#">Contato</a>
+</nav>
+
 <!-- HERO -->
-
 <section class="hero">
-
 <div class="hero-left">
-<h1 class="hero-title">
-Construa uma marca forte<br>
-e juridicamente protegida
+<h1>
+Proteja sua marca<br>
+com estratégia jurídica
 </h1>
-
-<p class="hero-sub">
-Atuação estratégica no INPI para garantir exclusividade, segurança jurídica e valorização do seu negócio.
+<p>
+Atuação especializada no INPI para garantir exclusividade, segurança e valorização do seu negócio.
 </p>
-
-<a class="btn" href="#">Quero proteger minha marca</a>
+<button class="btn">Falar no WhatsApp</button>
 </div>
 
-<div class="hero-photo">
+<div class="hero-right">
 <img src="SUA-FOTO.jpg">
 
 <div class="hero-overlay"></div>
 
-<div class="hero-info">
+<div class="hero-card">
 <h3>Andriely Lemos</h3>
-<p>Assessoria Jurídica · Marcas</p>
+<span>Especialista em Marcas</span>
 </div>
 </div>
-
 </section>
 
 <!-- SERVIÇOS -->
-
-<section class="section container">
-
-<h2>Atuação estratégica</h2>
+<section class="section wrap fade">
+<h2>Atuação</h2>
 
 <div class="grid">
 
 <div class="card">
-<h3>Pesquisa de Anterioridade</h3>
-<p>Análise completa da base do INPI para evitar conflitos e garantir segurança antes do registro.</p>
+<h3>Pesquisa</h3>
+<p>Análise estratégica para evitar conflitos e aumentar chances de aprovação.</p>
 </div>
 
 <div class="card">
-<h3>Registro de Marca</h3>
-<p>Depósito correto e estratégico para maximizar as chances de aprovação.</p>
+<h3>Registro</h3>
+<p>Depósito correto no INPI garantindo proteção completa da marca.</p>
 </div>
 
 <div class="card">
 <h3>Acompanhamento</h3>
-<p>Monitoramento contínuo e atuação jurídica até a concessão final.</p>
+<p>Monitoramento contínuo até a concessão final.</p>
 </div>
 
 </div>
-
 </section>
 
 <!-- SOBRE -->
-
-<section class="section container sobre">
+<section class="section wrap sobre fade">
 
 <img src="SUA-FOTO-2.jpg">
 
-<div class="sobre-text">
-
+<div>
 <h2>Sobre</h2>
-
 <p>
-Andriely Lemos atua de forma especializada no registro de marcas,
-oferecendo um serviço jurídico estratégico e personalizado.
+Atuação estratégica no registro de marcas com foco na proteção jurídica e crescimento do negócio.
 </p>
-
 <p>
-Seu trabalho une precisão técnica com um atendimento próximo,
-garantindo segurança em cada etapa do processo.
+Atendimento personalizado e visão técnica para cada cliente.
 </p>
-
 </div>
 
 </section>
 
-<!-- CTA FINAL -->
-
-<section class="cta">
-
-<h2>
-Sua marca pode ser registrada por outra pessoa hoje.
-</h2>
-
-<p>
-No Brasil, o direito pertence a quem registra primeiro.
-</p>
-
-<a class="btn" href="#">Falar no WhatsApp</a>
-
+<!-- CTA -->
+<section class="cta fade">
+<h2>Sua marca pode ser registrada por outra pessoa</h2>
+<p>No Brasil, quem registra primeiro tem prioridade</p>
+<button class="btn">Quero proteger agora</button>
 </section>
 
-<!-- FOOTER -->
-
 <footer>
-© 2025 Andriely Lemos — Assessoria Jurídica · INPI
+© 2025 Andriely Lemos · INPI · Brasil
 </footer>
+
+<script>
+
+/* SCROLL REVEAL */
+const fades = document.querySelectorAll('.fade');
+
+window.addEventListener('scroll', () => {
+fades.forEach(el => {
+const top = el.getBoundingClientRect().top;
+if(top < window.innerHeight - 100){
+el.classList.add('show');
+}
+});
+});
+
+/* BOTÃO */
+document.querySelectorAll('.btn').forEach(btn=>{
+btn.addEventListener('click',()=>{
+window.open("https://wa.me/5527999999999?text=Olá, quero registrar minha marca");
+});
+});
+
+</script>
 
 </body>
 </html>
