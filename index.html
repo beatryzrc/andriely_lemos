@@ -1,386 +1,588 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Amanda Silva | Advocacia Especialista em Registro de Marcas</title>
+    <!-- Ícones FontAwesome para Redes Sociais e Elementos -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- Google Fonts - Inter para leitura moderna e Cormorant para títulos elegantes -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-<title>Andriely Lemos | Registro de Marcas</title>
+    <style>
+        /* --- CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --azul-premium: #0B192C;
+            --ouro: #C5A880;
+            --ouro-escuro: #A3875F;
+            --bg-claro: #F9F9FB;
+            --texto-escuro: #1E2229;
+            --texto-claro: #606875;
+            --branco: #FFFFFF;
+            --transicao: all 0.3s ease;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
 
-<style>
+        body {
+            background-color: var(--branco);
+            color: var(--texto-escuro);
+            line-height: 1.6;
+        }
 
-/* RESET */
-*{margin:0;padding:0;box-sizing:border-box}
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+        }
 
-/* VARIÁVEIS */
-:root{
---bg:#f9f9f7;
---black:#111;
---soft:#6b6b6b;
---line:rgba(0,0,0,.08);
---accent:#345e50;
+        section {
+            padding: 100px 20px;
+        }
 
---title:'Cormorant Garamond', serif;
---body:'Outfit', sans-serif;
-}
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
 
-/* BASE */
-body{
-font-family:var(--body);
-background:var(--bg);
-color:var(--black);
-line-height:1.6;
-overflow-x:hidden;
-}
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--azul-premium);
+            margin-bottom: 50px;
+            position: relative;
+        }
 
-/* CONTAINER */
-.wrap{
-max-width:1200px;
-margin:auto;
-padding:0 2rem;
-}
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--ouro);
+            margin: 15px auto 0;
+        }
 
-/* NAV */
-nav{
-position:fixed;
-top:0;
-width:100%;
-padding:1.2rem 2rem;
-display:flex;
-justify-content:space-between;
-align-items:center;
-z-index:1000;
-background:rgba(255,255,255,.8);
-backdrop-filter:blur(10px);
-border-bottom:1px solid var(--line);
-}
+        /* --- BOTÕES --- */
+        .btn-principal {
+            display: inline-block;
+            background-color: var(--ouro);
+            color: var(--azul-premium);
+            padding: 16px 32px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: var(--transicao);
+            border: 1px solid var(--ouro);
+            text-transform: uppercase;
+        }
 
-nav a{
-text-decoration:none;
-color:var(--black);
-font-size:.75rem;
-letter-spacing:.15em;
-text-transform:uppercase;
-}
+        .btn-principal:hover {
+            background-color: transparent;
+            color: var(--ouro);
+            transform: translateY(-2px);
+        }
 
-/* HERO */
+        /* --- HEADER / NAVEGAÇÃO --- */
+        header {
+            background-color: rgba(11, 25, 44, 0.98);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+        }
 
-.hero{
-height:100vh;
-display:grid;
-grid-template-columns:1.2fr 1fr;
-}
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
 
-.hero-left{
-display:flex;
-flex-direction:column;
-justify-content:center;
-padding:6rem;
-animation:fadeUp 1.2s ease;
-}
+        .logo {
+            color: var(--ouro);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
 
-.hero h1{
-font-family:var(--title);
-font-size:clamp(3rem,5vw,5rem);
-font-weight:300;
-line-height:1.05;
-margin-bottom:2rem;
-}
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
 
-.hero p{
-color:var(--soft);
-max-width:420px;
-margin-bottom:3rem;
-}
+        .nav-menu a {
+            color: var(--branco);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transicao);
+        }
 
-.btn{
-padding:14px 28px;
-background:var(--black);
-color:#fff;
-border:none;
-letter-spacing:.15em;
-font-size:.75rem;
-cursor:pointer;
-transition:.3s;
-}
+        .nav-menu a:hover {
+            color: var(--ouro);
+        }
 
-.btn:hover{
-background:var(--accent);
-transform:translateY(-2px);
-}
+        .menu-toggle {
+            display: none;
+            color: var(--branco);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
-/* FOTO HERO */
+        /* --- BANNER PRINCIPAL (HERO) --- */
+        .hero {
+            background: linear-gradient(rgba(11, 25, 44, 0.85), rgba(11, 25, 44, 0.95)), 
+                        url('https://unsplash.com') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            color: var(--branco);
+            padding-top: 80px;
+        }
 
-.hero-right{
-position:relative;
-overflow:hidden;
-}
+        .hero-content {
+            max-width: 700px;
+        }
 
-.hero-right img{
-width:100%;
-height:100%;
-object-fit:cover;
-filter:grayscale(20%);
-}
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
 
-.hero-overlay{
-position:absolute;
-inset:0;
-background:linear-gradient(to top, rgba(0,0,0,.7), transparent 60%);
-}
+        .hero h1 span {
+            color: var(--ouro);
+        }
 
-.hero-card{
-position:absolute;
-bottom:40px;
-left:40px;
-color:#fff;
-}
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
 
-.hero-card h3{
-font-family:var(--title);
-font-size:1.3rem;
-}
+        /* --- SEÇÃO POR QUE REGISTRAR --- */
+        .pq-registrar {
+            background-color: var(--bg-claro);
+        }
 
-.hero-card span{
-font-size:.7rem;
-letter-spacing:.15em;
-opacity:.7;
-}
+        .grid-beneficios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
 
-/* SEÇÕES */
+        .card-beneficio {
+            background: var(--branco);
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-top: 4px solid var(--azul-premium);
+            transition: var(--transicao);
+        }
 
-.section{
-padding:8rem 0;
-}
+        .card-beneficio:hover {
+            transform: translateY(-5px);
+            border-top-color: var(--ouro);
+        }
 
-.section h2{
-font-family:var(--title);
-font-size:3rem;
-font-weight:300;
-margin-bottom:3rem;
-}
+        .card-beneficio i {
+            font-size: 2rem;
+            color: var(--ouro);
+            margin-bottom: 20px;
+        }
 
-/* SERVIÇOS */
+        .card-beneficio h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--azul-premium);
+        }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:2rem;
-}
+        .card-beneficio p {
+            color: var(--texto-claro);
+            font-size: 0.95rem;
+        }
 
-.card{
-background:#fff;
-padding:2.5rem;
-border:1px solid var(--line);
-transition:.4s;
-}
+        /* --- SEÇÃO SERVIÇOS --- */
+        .servicos .grid-servicos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
 
-.card:hover{
-transform:translateY(-8px);
-border-color:rgba(0,0,0,.2);
-}
+        .item-servico {
+            text-align: center;
+            padding: 20px;
+        }
 
-.card h3{
-font-family:var(--title);
-font-size:1.4rem;
-margin-bottom:1rem;
-}
+        .num-servico {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            color: rgba(197, 168, 128, 0.3);
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
 
-.card p{
-color:var(--soft);
-font-size:.9rem;
-}
+        .item-servico h3 {
+            font-size: 1.6rem;
+            color: var(--azul-premium);
+            margin-bottom: 15px;
+        }
 
-/* SOBRE */
+        .item-servico p {
+            color: var(--texto-claro);
+        }
 
-.sobre{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:5rem;
-align-items:center;
-}
+        /* --- SEÇÃO FAQ --- */
+        .faq {
+            background-color: var(--bg-claro);
+        }
 
-.sobre img{
-width:100%;
-height:520px;
-object-fit:cover;
-}
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
 
-.sobre p{
-color:var(--soft);
-margin-bottom:1rem;
-}
+        .faq-item {
+            background: var(--branco);
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
 
-/* CTA */
+        .faq-pergunta {
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--azul-premium);
+            user-select: none;
+        }
 
-.cta{
-background:var(--black);
-color:#fff;
-text-align:center;
-padding:7rem 2rem;
-}
+        .faq-resposta {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: var(--branco);
+        }
 
-.cta h2{
-font-family:var(--title);
-font-size:3rem;
-font-weight:300;
-margin-bottom:1rem;
-}
+        .faq-resposta p {
+            padding: 0 24px 24px 24px;
+            color: var(--texto-claro);
+            font-size: 0.95rem;
+        }
 
-.cta p{
-opacity:.7;
-margin-bottom:2rem;
-}
+        .faq-item.ativo .faq-resposta {
+            max-height: 200px; /* Ajuste flexível baseado no texto */
+        }
 
-/* SCROLL ANIM */
+        .faq-item i {
+            transition: var(--transicao);
+        }
 
-.fade{
-opacity:0;
-transform:translateY(50px);
-transition:1s;
-}
+        .faq-item.ativo i {
+            transform: rotate(180deg);
+            color: var(--ouro);
+        }
 
-.fade.show{
-opacity:1;
-transform:translateY(0);
-}
+        /* --- CTAs E REDIRECIONAMENTOS --- */
+        .cta-final {
+            background-color: var(--azul-premium);
+            color: var(--branco);
+            text-align: center;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.2);
+        }
 
-/* FOOTER */
+        .cta-final h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
 
-footer{
-padding:3rem;
-text-align:center;
-font-size:.8rem;
-color:#aaa;
-border-top:1px solid var(--line);
-}
+        .cta-final p {
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
 
-/* KEYFRAMES */
-@keyframes fadeUp{
-from{opacity:0; transform:translateY(30px);}
-to{opacity:1; transform:translateY(0);}
-}
+        .botoes-redes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-/* RESPONSIVO */
+        .btn-rede {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: var(--branco);
+            font-weight: 600;
+            transition: var(--transicao);
+        }
 
-@media(max-width:900px){
-.hero{grid-template-columns:1fr}
-.hero-left{padding:3rem}
-.grid{grid-template-columns:1fr}
-.sobre{grid-template-columns:1fr}
-}
+        .btn-whatsapp {
+            background-color: #25D366;
+        }
 
-</style>
+        .btn-whatsapp:hover {
+            background-color: #1ebd57;
+            transform: translateY(-3px);
+        }
 
+        .btn-instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+        }
+
+        .btn-instagram:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #060D17;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 73px;
+                left: 0;
+                width: 100%;
+                background-color: var(--azul-premium);
+                padding: 20px;
+                text-align: center;
+                border-bottom: 2px solid var(--ouro);
+            }
+
+            .nav-menu.aberto {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<nav>
-<a href="#">Andriely Lemos</a>
-<a href="#">Contato</a>
-</nav>
+    <!-- NAV BAR -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">AMANDA SILVA</a>
+            <div class="menu-toggle" id="mobile-menu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <ul class="nav-menu" id="nav-list">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#por-que-registrar">Por Que Registrar</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#faq">Dúvidas Frequentes</a></li>
+                <li><a href="#contato">Fale Conosco</a></li>
+            </ul>
+        </div>
+    </header>
 
-<!-- HERO -->
-<section class="hero">
-<div class="hero-left">
-<h1>
-Proteja sua marca<br>
-com estratégia jurídica
-</h1>
-<p>
-Atuação especializada no INPI para garantir exclusividade, segurança e valorização do seu negócio.
-</p>
-<button class="btn">Falar no WhatsApp</button>
-</div>
+    <!-- BANNER INICIAL (VISUAL DE IMPACTO) -->
+    <section class="hero" id="inicio">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Não deixe outra pessoa roubar o <span>nome do seu negócio.</span></h1>
+                <p>Proteja seu maior patrimônio empresarial. Garanta a exclusividade jurídica da sua marca no INPI com uma assessoria jurídica especializada de alto padrão.</p>
+                <a href="#contato" class="btn-principal">Proteger Minha Marca Agora</a>
+            </div>
+        </div>
+    </section>
 
-<div class="hero-right">
-<img src="SUA-FOTO.jpg">
+    <!-- POR QUE REGISTRAR? -->
+    <section class="pq-registrar" id="por-que-registrar">
+        <div class="container">
+            <h2 class="section-title">O Risco de Não Registrar sua Marca</h2>
+            <div class="grid-beneficios">
+                <div class="card-beneficio">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>Uso Indevido</h3>
+                    <p>Sem o registro, qualquer concorrente pode usar seu nome legalmente e roubar a clientela que você batalhou para conquistar.</p>
+                </div>
+                <div class="card-beneficio">
+                    <i class="fa-solid fa-gavel"></i>
+                    <h3>Processos e Multas</h3>
+                    <p>Se outra pessoa registrar seu nome primeiro, você poderá ser forçado judicialmente a trocar de marca e pagar indenizações pesadas.</p>
+                </div>
+                <div class="card-beneficio">
+                    <i class="fa-solid fa-gem"></i>
+                    <h3>Perda de Investimento</h3>
+                    <p>Todo o valor gasto em fachadas, embalagens, logomarcas e anúncios será jogado no lixo se você perder o direito ao nome.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="hero-overlay"></div>
+    <!-- SEÇÃO DE SERVIÇOS -->
+    <section class="servicos" id="servicos">
+        <div class="container">
+            <h2 class="section-title">Nossas Soluções Especializadas</h2>
+            <div class="grid-servicos">
+                <div class="item-servico">
+                    <div class="num-servico">01</div>
+                    <h3>Pesquisa de Viabilidade</h3>
+                    <p>Análise jurídica minuciosa nos bancos de dados do INPI para conferir se o nome está livre e seguro para ser solicitado.</p>
+                </div>
+                <div class="item-servico">
+                    <div class="num-servico">02</div>
+                    <h3>Depósito da Marca</h3>
+                    <p>Montagem técnica do processo estratégico e protocolo correto junto ao órgão federal, evitando erros que causam indeferimentos.</p>
+                </div>
+                <div class="item-servico">
+                    <div class="num-servico">03</div>
+                    <h3>Acompanhamento</h3>
+                    <p>Monitoramento semanal ativo durante anos para combater oposições de terceiros até a entrega do seu certificado definitivo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="hero-card">
-<h3>Andriely Lemos</h3>
-<span>Especialista em Marcas</span>
-</div>
-</div>
-</section>
+    <!-- DÚVIDAS FREQUENTES (FAQ) -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title">Dúvidas Frequentes</h2>
+            <div class="faq-container">
+                
+                <div class="faq-item">
+                    <div class="faq-pergunta">
+                        O CNPJ ou a Junta Comercial protegem o meu nome?
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-resposta">
+                        <p>Não. A Junta Comercial protege apenas a Razão Social no seu estado. A exclusividade da marca (nome fantasia e logo) em todo o território nacional só existe com o registro no INPI.</p>
+                    </div>
+                </div>
 
-<!-- SERVIÇOS -->
-<section class="section wrap fade">
-<h2>Atuação</h2>
+                <div class="faq-item">
+                    <div class="faq-pergunta">
+                        Quanto tempo dura o registro de uma marca?
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-resposta">
+                        <p>O registro é válido por 10 anos em todo o Brasil. Esse prazo pode ser renovado sucessivamente por novos períodos de 10 anos, garantindo a proteção perpétua do seu negócio.</p>
+                    </div>
+                </div>
 
-<div class="grid">
+                <div class="faq-item">
+                    <div class="faq-pergunta">
+                        Posso registrar a marca sozinho? Por que contratar advogada?
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-resposta">
+                        <p>É possível, mas altamente arriscado. Mais de 50% dos pedidos solitários sofrem exigências ou são negados por falhas técnicas na classificação ou falta de acompanhamento de prazos legais.</p>
+                    </div>
+                </div>
 
-<div class="card">
-<h3>Pesquisa</h3>
-<p>Análise estratégica para evitar conflitos e aumentar chances de aprovação.</p>
-</div>
+            </div>
+        </div>
+    </section>
 
-<div class="card">
-<h3>Registro</h3>
-<p>Depósito correto no INPI garantindo proteção completa da marca.</p>
-</div>
+    <!-- BOTÕES REDIRECIONADORES (CONTATO) -->
+    <section class="cta-final" id="contato">
+        <div class="container">
+            <h2>Vamos Proteger o Seu Negócio?</h2>
+            <p>Fale diretamente com uma advogada especialista e tire suas dúvidas agora mesmo pelos nossos canais oficiais.</p>
+            <div class="botoes-redes">
+                <!-- Substitua pelo link real do seu WhatsApp -->
+                <a href="https://wa.me de fazer uma análise da minha marca." target="_blank" class="btn-rede btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> Falar no WhatsApp
+                </a>
+                <!-- Substitua pelo link real do seu Instagram -->
+                <a href="https://instagram.com" target="_blank" class="btn-rede btn-instagram">
+                    <i class="fa-brands fa-instagram"></i> Seguir no Instagram
+                </a>
+            </div>
+        </div>
+    </section>
 
-<div class="card">
-<h3>Acompanhamento</h3>
-<p>Monitoramento contínuo até a concessão final.</p>
-</div>
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Amanda Silva Advocacia. Todos os direitos reservados. Termos de Uso e Políticas de Privacidade.</p>
+        </div>
+    </footer>
 
-</div>
-</section>
+    <!-- JAVASCRIPT INTEGRADO -->
+    <script>
+        // MENU MOBILE ATIVAÇÃO
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navList = document.getElementById('nav-list');
 
-<!-- SOBRE -->
-<section class="section wrap sobre fade">
+        mobileMenu.addEventListener('click', () => {
+            navList.classList.toggle('aberto');
+        });
 
-<img src="SUA-FOTO-2.jpg">
+        // Fechar menu mobile ao clicar em um link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navList.classList.remove('aberto');
+            });
+        });
 
-<div>
-<h2>Sobre</h2>
-<p>
-Atuação estratégica no registro de marcas com foco na proteção jurídica e crescimento do negócio.
-</p>
-<p>
-Atendimento personalizado e visão técnica para cada cliente.
-</p>
-</div>
+        // FUNCIONALIDADE DO FAQ ACCORDION
+        const faqPerguntas = document.querySelectorAll('.faq-pergunta');
 
-</section>
+        faqPerguntas.forEach(pergunta => {
+            pergunta.addEventListener('click', () => {
+                const itemPai = pergunta.parentElement;
+                
+                // Fecha outros itens abertos (Opcional - Efeito sanfona limpo)
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    if (item !== itemPai) {
+                        item.classList.remove('ativo');
+                    }
+                });
 
-<!-- CTA -->
-<section class="cta fade">
-<h2>Sua marca pode ser registrada por outra pessoa</h2>
-<p>No Brasil, quem registra primeiro tem prioridade</p>
-<button class="btn">Quero proteger agora</button>
-</section>
-
-<footer>
-© 2025 Andriely Lemos · INPI · Brasil
-</footer>
-
-<script>
-
-/* SCROLL REVEAL */
-const fades = document.querySelectorAll('.fade');
-
-window.addEventListener('scroll', () => {
-fades.forEach(el => {
-const top = el.getBoundingClientRect().top;
-if(top < window.innerHeight - 100){
-el.classList.add('show');
-}
-});
-});
-
-/* BOTÃO */
-document.querySelectorAll('.btn').forEach(btn=>{
-btn.addEventListener('click',()=>{
-window.open("https://wa.me/5527999999999?text=Olá, quero registrar minha marca");
-});
-});
-
-</script>
-
+                // Abre ou fecha o item clicado
+                itemPai.classList.toggle('ativo');
+            });
+        });
+    </script>
 </body>
 </html>
